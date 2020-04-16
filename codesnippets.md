@@ -1,0 +1,1 @@
+-rcc for full react component

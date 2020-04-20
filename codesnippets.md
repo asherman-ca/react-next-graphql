@@ -1,1 +1,2 @@
 -rcc for full react component
+-rccp to include prop types object

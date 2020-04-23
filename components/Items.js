@@ -16,7 +16,7 @@ const ALL_ITEMS_QUERY = gql`
     items(
       skip: $skip,
       first: $first,
-      orderBy: updatedAt_DESC
+      orderBy: createdAt_DESC
     ) {
       id
       title

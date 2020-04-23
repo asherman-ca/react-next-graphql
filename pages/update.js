@@ -1,9 +1,7 @@
 import UpdateItem from '../components/UpdateItem';
 
 const Update = props => (
-    <div>
-        <UpdateItem id={props.query.id} />
-    </div>
+    <UpdateItem id={props.query.id} />
 );
 
 export default Update;

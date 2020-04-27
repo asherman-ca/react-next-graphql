@@ -16,9 +16,11 @@ const SIGNUP_MUTATION =  gql`
       password: $password
     ) {
       id
+      email
+      name
     }
   }
-`
+`;
 
 export default class Signup extends Component {
   state = {
@@ -33,43 +35,56 @@ export default class Signup extends Component {
 
   render() {
     return (
-      <Form>
-        <fieldset>
-          <h2>Sign up for an account</h2>
-            <label htmlFor="email">
-              Email
-              <input 
-                type="email"
-                name="email"
-                placeholder="email"
-                value={this.state.email}
-                onChange={this.saveToState}
-              />
-            </label>  
-            <label htmlFor="name">
-              Name
-              <input 
-                type="text"
-                name="name"
-                placeholder="name"
-                value={this.state.name}
-                onChange={this.saveToState}
-              />
-            </label>
-            <label htmlFor="password">
-              Password
-              <input 
-                type="password"
-                name="password"
-                placeholder="password"
-                value={this.state.password}
-                onChange={this.saveToState}
-              />
-            </label>
+      <Mutation mutation={SIGNUP_MUTATION} variables={this.state}>
+        {(signup, { loading, error }) => (
+          <Form method="post" onSubmit={async e => {
+            e.preventDefault();
+            await signup();
+            this.setState({
+              name: '',
+              email: '',
+              password: '',
+            })
+          }}>
+            <fieldset disabled={loading} aria-busy={loading}>
+              <h2>Sign up for an account</h2>
+              <Error error={error} />
+                <label htmlFor="email">
+                  Email
+                  <input 
+                    type="email"
+                    name="email"
+                    placeholder="email"
+                    value={this.state.email}
+                    onChange={this.saveToState}
+                  />
+                </label>  
+                <label htmlFor="name">
+                  Name
+                  <input 
+                    type="text"
+                    name="name"
+                    placeholder="name"
+                    value={this.state.name}
+                    onChange={this.saveToState}
+                  />
+                </label>
+                <label htmlFor="password">
+                  Password
+                  <input 
+                    type="password"
+                    name="password"
+                    placeholder="password"
+                    value={this.state.password}
+                    onChange={this.saveToState}
+                  />
+                </label>
 
-            <button type="submut">Sign Up</button>
-        </fieldset>
-      </Form>
+                <button type="submut">Sign Up</button>
+            </fieldset>
+          </Form>
+        )}
+      </Mutation>
     )
   }
 }

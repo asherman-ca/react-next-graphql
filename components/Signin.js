@@ -5,27 +5,23 @@ import Form from './styles/Form';
 import Error from './ErrorMessage';
 import { CURRENT_USER_QUERY } from './User';
 
-const SIGNUP_MUTATION =  gql`
-  mutation SIGNUP_MUTATION(
-    $name: String!
+const SIGNIN_MUTATION =  gql`
+  mutation SIGNIN_MUTATION(
     $email: String!
     $password: String!
   ) {
-    signup(
-      name: $name
+    signin(
       email: $email
       password: $password
     ) {
       id
       email
-      name
     }
   }
 `;
 
-export default class Signup extends Component {
+export default class Signin extends Component {
   state = {
-    name: '',
     email: '',
     password: '',
   };
@@ -36,7 +32,14 @@ export default class Signup extends Component {
 
   render() {
     return (
-      <Mutation mutation={SIGNUP_MUTATION} variables={this.state} refetchQueries={[{ query: CURRENT_USER_QUERY }]}>
+      <Mutation 
+        mutation={SIGNIN_MUTATION} 
+        variables={this.state}
+        // the refetch goes into the Apollo store and refetches after the mutation is complete. avoids refresh. better name would be postQueries?
+        refetchQueries={[
+          { query: CURRENT_USER_QUERY }
+        ]}
+      >
         {(signup, { loading, error }) => (
           <Form method="post" onSubmit={async e => {
             e.preventDefault();
@@ -48,7 +51,7 @@ export default class Signup extends Component {
             })
           }}>
             <fieldset disabled={loading} aria-busy={loading}>
-              <h2>Sign up for an account</h2>
+              <h2>Sign in to your account</h2>
               <Error error={error} />
                 <label htmlFor="email">
                   Email
@@ -60,16 +63,6 @@ export default class Signup extends Component {
                     onChange={this.saveToState}
                   />
                 </label>  
-                <label htmlFor="name">
-                  Name
-                  <input 
-                    type="text"
-                    name="name"
-                    placeholder="name"
-                    value={this.state.name}
-                    onChange={this.saveToState}
-                  />
-                </label>
                 <label htmlFor="password">
                   Password
                   <input 
@@ -81,7 +74,7 @@ export default class Signup extends Component {
                   />
                 </label>
 
-                <button type="submut">Sign Up</button>
+                <button type="submut">Sign In</button>
             </fieldset>
           </Form>
         )}

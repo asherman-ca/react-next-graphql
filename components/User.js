@@ -14,6 +14,7 @@ const CURRENT_USER_QUERY = gql`
 `;
 
 // passes the query payload and any props down
+// the child of user must be a function that receives payload as an argument
 const User = props => (
   <Query { ...props } query={CURRENT_USER_QUERY}>
     {payload => props.children(payload)}

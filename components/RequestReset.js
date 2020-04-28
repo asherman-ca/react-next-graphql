@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 
@@ -31,7 +32,7 @@ export default class RequestReset extends Component {
         mutation={REQUEST_RESET_MUTATION} 
         variables={this.state}
       >
-        {(requestReset, { loading, error }) => (
+        {(requestReset, { loading, error, called }) => (
           <Form method="post" onSubmit={async e => {
             e.preventDefault();
             await requestReset();
@@ -42,17 +43,18 @@ export default class RequestReset extends Component {
             <fieldset disabled={loading} aria-busy={loading}>
               <h2>Request a password reset email</h2>
               <Error error={error} />
-                <label htmlFor="email">
-                  Email
-                  <input 
-                    type="email"
-                    name="email"
-                    placeholder="email"
-                    value={this.state.email}
-                    onChange={this.saveToState}
-                  />
-                </label>  
-                <button type="submut">Request Reset</button>
+              {!error && !loading && called && <p>Reset email sent</p>}            
+              <label htmlFor="email">
+                Email
+                <input 
+                  type="email"
+                  name="email"
+                  placeholder="email"
+                  value={this.state.email}
+                  onChange={this.saveToState}
+                />
+              </label>  
+              <button type="submut">Request Reset</button>
             </fieldset>
           </Form>
         )}

@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
+import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
+
 import Form from './styles/Form';
 import Error from './ErrorMessage';
+import { CURRENT_USER_QUERY } from './User';
 
-const RESET_PASSWORD_MUTATION =  gql`
-  mutation RESET_PASSWORD_MUTATION(
+const RESET_MUTATION =  gql`
+  mutation RESET_MUTATION(
     $resetToken: String!
     $password: String!
     $confirmPassword: String!
@@ -16,15 +19,20 @@ const RESET_PASSWORD_MUTATION =  gql`
       confirmPassword: $confirmPassword
     ) {
       id
+      email
+      name
     }
   }
 `;
 
 export default class ResetPassword extends Component {
+  static propTypes = {
+    resetToken: PropTypes.string.isRequired,
+  };
+
   state = {
     password: '',
     confirmPassword: '',
-    resetToken: this.props.token,
   };
 
   saveToState = (e) => {
@@ -34,8 +42,15 @@ export default class ResetPassword extends Component {
   render() {
     return (
       <Mutation 
-        mutation={RESET_PASSWORD_MUTATION} 
-        variables={this.state}
+        mutation={RESET_MUTATION} 
+        variables={{
+          resetToken: this.props.resetToken,
+          password: this.state.password,
+          confirmPassword: this.state.confirmPassword,
+        }}
+        refetchQueries={[
+          { query: CURRENT_USER_QUERY }
+        ]}
       >
         {(resetPassword, { loading, error }) => (
           <Form method="post" onSubmit={async e => {
@@ -49,7 +64,6 @@ export default class ResetPassword extends Component {
             <fieldset disabled={loading} aria-busy={loading}>
               <h2>Reset Password</h2>
               <Error error={error} />
-              {/* <p>{this.props.token}</p> */}
               <label htmlFor="password">
                   Password
                   <input 
@@ -61,7 +75,7 @@ export default class ResetPassword extends Component {
                   />
                 </label>
                 <label htmlFor="confirmPassword">
-                  Password
+                  Confirm Password
                   <input 
                     type="password"
                     name="confirmPassword"

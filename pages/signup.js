@@ -1,6 +1,8 @@
 import Signup from '../components/Signup';
 import Signin from '../components/Signin';
+import RequestReset from '../components/RequestReset';
 import styled from 'styled-components';
+import ResetPassword from '../components/ResetPassword';
 
 const Columns = styled.div`
   display: grid;
@@ -12,6 +14,8 @@ const signup = props => (
     <Columns>
       <Signup />
       <Signin />
+      <RequestReset />
+      <ResetPassword token={props.query.token || ''} />
     </Columns>
 );
 

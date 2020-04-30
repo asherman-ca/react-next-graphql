@@ -17,7 +17,7 @@ export default class AddToCart extends Component {
     const { id } = this.props;
     return (
       <Mutation mutation={ADD_TO_CART_MUTATION} variables={{id}}>
-        {addToCart => <button onClick={addToCart}>Add To Cart</button>}
+        {addToCart => <button onClick={addToCart}>Add To Cart 🛒</button>}
       </Mutation>
     )
   }

@@ -40,7 +40,7 @@ export default class Item extends Component {
           <a>Edit ✏️</a>
         </Link>
         <AddToCart id={item.id}/>
-        <DeleteButton id={item.id}>Delete</DeleteButton>
+        <DeleteButton id={item.id}>Delete 💣</DeleteButton>
       </div>
     </ItemStyles>
   }

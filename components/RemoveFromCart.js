@@ -29,9 +29,10 @@ export default class RemoveFromCart extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired
   }
-  // this gets called as soon as we get a response back form the server after a mutation has been performed
+  // this gets called as soon as we get a response back form the server after a mutation has been performed. unless there's an optimistic response configured to it
   // payload is the response from the mutation
   update = (cache, payload) => {
+    console.log('optimistic response?!')
     // 1. first read the cache
     const data = cache.readQuery({ query: CURRENT_USER_QUERY });
     // 2. remove that item from the cart
@@ -46,6 +47,7 @@ export default class RemoveFromCart extends Component {
         mutation={REMOVE_FROM_CART_MUTATION}
         variables={{ id: this.props.id }}
         update={this.update}
+        // optimistic response pre-runs the update method before the response actually comes back
         optimisticResponse={{
           __typename: 'Mutation',
           removeFromCart: {
@@ -53,9 +55,6 @@ export default class RemoveFromCart extends Component {
             id: this.props.id,
           },
         }}
-        // refetchQueries={[
-        //   {query: CURRENT_USER_QUERY}
-        // ]}
       >
         {(removeFromCart, { loading, error }) => (
           <BigButton

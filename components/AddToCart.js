@@ -20,7 +20,7 @@ export default class AddToCart extends Component {
       <Mutation 
         mutation={ADD_TO_CART_MUTATION} 
         variables={{id}}
-        // the fetch updates the user, which updates the cart because cart is connected to the user query
+        // the refetch updates the user, which updates the cart because cart is connected to the user query
         refetchQueries={[
           { query: CURRENT_USER_QUERY }
         ]}

@@ -13,6 +13,8 @@ const ADD_TO_CART_MUTATION = gql`
 `;
 
 // TODO: determine if this needs to be a statefull component
+// TODO: setup update and optimistic response like remove from cart
+  // item attributes will need to be passed into this component along with the id to properly update cache
 export default class AddToCart extends Component {
   render() {
     const { id } = this.props;

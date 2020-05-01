@@ -41,8 +41,10 @@ export default class CreateItem extends Component {
     this.setState({ [name]: val });
   }
 
-  // TODO 4/21/20: check that image is done uploading before allowing item submission
-  // TODO 4/21/20: instead of previewing just the image - preview the full card as it will appear
+// TODO 4/21/20: check that image is done uploading before allowing item submission
+// TODO 4/21/20: instead of previewing just the image - preview the full card as it will appear
+// TODO: cache invalidation - need to invalidate cache on item creation or delete. currently the pages get busted and user most likely needs to refresh.
+// current best solution is fetchpolicy="network-only" on the items query but then no speed benefit from caching
 
   uploadFile = async e => {
     console.log('uploading file...');

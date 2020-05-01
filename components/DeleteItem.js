@@ -13,6 +13,9 @@ const DELETE_ITEM_MUTATION = gql`
 
 export default class DeleteItem extends Component {
 
+  // TODO: determine if this is better resolved with refetchQueries and ALL_ITEMS_QUERY on the mutation
+  // TODO: its probably worse because it costs an extra network call
+  
   // need to manually update frontend cache after deleting backend data
   update = (cache, payload) => {
     // manually update cache on client to match server

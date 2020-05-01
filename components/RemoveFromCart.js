@@ -8,6 +8,8 @@ import { CURRENT_USER_QUERY } from './User';
 const REMOVE_FROM_CART_MUTATION = gql`
   mutation removeFromCart($id: ID!) {
     removeFromCart(id: $id) {
+      # do I really need the id returned?
+      # yes, we use it in update to filter the cache
       id
     }
   }
@@ -27,14 +29,34 @@ export default class RemoveFromCart extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired
   }
+  update = (cache, payload) => {
+    console.log('Running remove from cart update fn');
+    // 1. first read the cache
+    const data = cache.readQuery({ query: CURRENT_USER_QUERY });
+    console.log(data);
+    // 2. remove that item from the cart
+    const cartItemId = payload.data.removeFromCart.id;
+    data.me.cart = data.me.cart.filter(cartItem => cartItem.id !== cartItemId);
+    // 3. write it back to the cache
+    cache.writeQuery({ query: CURRENT_USER_QUERY, data });
+  };
   render() {
     return (
       <Mutation
         mutation={REMOVE_FROM_CART_MUTATION}
         variables={{ id: this.props.id }}
-        refetchQueries={[
-          {query: CURRENT_USER_QUERY}
-        ]}
+        // this gets called as soon as we get a response back form the server after a mutation has been performed
+        update={this.update}
+        optimisticResponse={{
+          __typename: 'Mutation',
+          removeFromCart: {
+            __typename: 'CartItem',
+            id: this.props.id,
+          },
+        }}
+        // refetchQueries={[
+        //   {query: CURRENT_USER_QUERY}
+        // ]}
       >
         {(removeFromCart, { loading, error }) => (
           <BigButton

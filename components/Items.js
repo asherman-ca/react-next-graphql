@@ -14,7 +14,7 @@ const ALL_ITEMS_QUERY = gql`
     items(
       skip: $skip,
       first: $first,
-      orderBy: image_DESC
+      orderBy: createdAt_ASC
     ) {
       id
       title

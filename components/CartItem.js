@@ -23,7 +23,7 @@ const CartItem = ({ cartItem }) => {
   // TODO: update backend to delete cart items on item delete
   if(!cartItem.item) return (
     <CartItemStyles>
-      <p>This Item has been removed</p>
+      <p>This Item is no longer listed, please remove from cart</p>
       {/* empty div to maintain columns */}
       <div />
       <RemoveFromCart id={cartItem.id} />

@@ -21,7 +21,7 @@ const AnimationStyles = styled.span`
   .count-enter-active {
     opacity: 1;
     transform: rotateX(0);
-    transition: all 1000ms;
+    transition: all 600ms;
   }
   .count-exit {
     top: 0;

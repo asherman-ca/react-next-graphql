@@ -25,6 +25,7 @@ const TOGGLE_CART_MUTATION = gql`
 `;
 /* eslint-disable */
 const Composed = adopt({
+  // render function placed as child used as workaround for false error in console, generally sytax is just user: <User />
   user: ({ render }) => <User>{render}</User>,
   toggleCart: ({ render }) => <Mutation mutation={TOGGLE_CART_MUTATION}>{render}</Mutation>,
   localState: ({ render }) => <Query query={LOCAL_STATE_QUERY}>{render}</Query>,

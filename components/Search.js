@@ -16,12 +16,20 @@ const SEARCH_ITEMS_QUERY = gql`
   }
 `;
 
+function routeToItem(item) {
+  Router.push({
+    pathname: '/item',
+    query: {
+      id: item.id,
+    },
+  });
+}
+
 class AutoComplete extends React.Component {
   state = {
     items: [],
     loading: false,
   };
-  // debounce will prevent function from firing more than once every 350ms given 2nd argument of 350
   onChange = debounce(async (e, client) => {
     console.log('Searching...');
     // turn loading on
@@ -39,28 +47,44 @@ class AutoComplete extends React.Component {
   render() {
     return (
       <SearchStyles>
-        <div>
-          {/* gives direct access to db to allow for scripted queries (in the onChange in this case) instead of a static query like normal - see Items */}
-          <ApolloConsumer>
-            {client => (
-              <input
-                type="search"
-                onChange={e => {
-                  e.persist();
-                  this.onChange(e, client);
-                }}
-              />
-            )}
-          </ApolloConsumer>
-          <DropDown>
-            {this.state.items.map(item => (
-              <DropDownItem key={item.id}>
-                <img width="50" src={item.image} alt={item.title} />
-                {item.title}
-              </DropDownItem>
-            ))}
-          </DropDown>
-        </div>
+        <Downshift onChange={routeToItem} itemToString={item => (item === null ? '' : item.title)}>
+          {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => (
+            <div>
+              <ApolloConsumer>
+                {client => (
+                  <input
+                    {...getInputProps({
+                      type: 'search',
+                      placeholder: 'Search by title or description',
+                      id: 'search',
+                      className: this.state.loading ? 'loading' : '',
+                      onChange: e => {
+                        e.persist();
+                        this.onChange(e, client);
+                      },
+                    })}
+                  />
+                )}
+              </ApolloConsumer>
+              {isOpen && (
+                <DropDown>
+                  {this.state.items.map((item, index) => (
+                    <DropDownItem
+                      {...getItemProps({ item })}
+                      key={item.id}
+                      highlighted={index === highlightedIndex}
+                    >
+                      <img width="50" src={item.image} alt={item.title} />
+                      {item.title}
+                    </DropDownItem>
+                  ))}
+                  {!this.state.items.length &&
+                    !this.state.loading && <DropDownItem> Nothing found for: "{inputValue}"</DropDownItem>}
+                </DropDown>
+              )}
+            </div>
+          )}
+        </Downshift>
       </SearchStyles>
     );
   }

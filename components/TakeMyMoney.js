@@ -20,14 +20,15 @@ class TakeMyMoney extends React.Component {
   };
   render() {
     return (
+      // user component to expose the user's cart
       <User>
         {({ data: { me } }) => (
           <StripeCheckout
             amount={calcTotalPrice(me.cart)}
             name="Sick Fits"
             description={`Order of ${totalItems(me.cart)} items!`}
-            image={me.cart[0].item && me.cart[0].item.image}
-            stripeKey="pk_test_Vtknn6vSdcZWSG2JWvEiWSqC"
+            image={me.cart[0] && me.cart[0].item && me.cart[0].item.image}
+            stripeKey="pk_test_rJn5bx4oBBKtobVfLzHd8iJH"
             currency="USD"
             email={me.email}
             token={res => this.onToken(res)}

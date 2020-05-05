@@ -1,3 +1,6 @@
+// Notes
+- use stripe.com as styling reference
+
 // Pkg Docs
 
 // Stripe

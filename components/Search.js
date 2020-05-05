@@ -53,6 +53,7 @@ class AutoComplete extends React.Component {
               <ApolloConsumer>
                 {client => (
                   <input
+                    // get input props will fill the input box with the text of a clicked on item from the dropdown
                     {...getInputProps({
                       type: 'search',
                       placeholder: 'Search by title or description',
@@ -69,6 +70,8 @@ class AutoComplete extends React.Component {
               {isOpen && (
                 <DropDown>
                   {this.state.items.map((item, index) => (
+                    // getTtemProps turns the items into dynamic link elements (passes item to routeToItem method to create links. onChange (ln50 inside downshift render prop open) should be called onItemClick) that can be accessed with keyboard navigation
+                    // also passes the item's title to the input element as a placeholder
                     <DropDownItem
                       {...getItemProps({ item })}
                       key={item.id}

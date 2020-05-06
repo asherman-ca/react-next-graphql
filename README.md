@@ -1,3 +1,10 @@
+// Naming
+- blockade medical logistics
+- canopy medical logistics
+- chemwall
+- chemshield
+- barrier
+
 // Notes
 - use stripe.com as styling reference
 

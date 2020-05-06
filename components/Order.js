@@ -43,6 +43,7 @@ class Order extends React.Component {
           const order = data.order;
           return (
             <OrderStyles>
+              {/* this is a side effect, which change things outside our control in react */}
               <Head>
                 <title>Sick Fits - Order {order.id}</title>
               </Head>
@@ -71,6 +72,7 @@ class Order extends React.Component {
                   <div className="order-item" key={item.id}>
                     <img src={item.image} alt={item.title} />
                     <div className="item-details">
+                    {/* TODO: align these to the top left instead of space between */}
                       <h2>{item.title}</h2>
                       <p>Qty: {item.quantity}</p>
                       <p>Each: {formatMoney(item.price)}</p>

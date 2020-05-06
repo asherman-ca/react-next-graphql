@@ -16,7 +16,7 @@ const PAGINATION_QUERY = gql`
   }
 `;
 
-const Pagination = ({ page }) => (
+const Pagination = (props) => (
   <Query 
     query={PAGINATION_QUERY}
   >

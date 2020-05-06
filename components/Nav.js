@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { Mutation } from 'react-apollo';
-
 import { TOGGLE_CART_MUTATION } from './Cart';
 import NavStyles from './styles/NavStyles';
 import User from './User';
@@ -11,7 +10,7 @@ const Nav = () => (
   <User>
     {({data: { me }}) => (
     // destucturing the payload passed down, not through conventional props though
-      <NavStyles>
+      <NavStyles data-test="nav">
         <Link href="/items">
           <a>Shop</a>
         </Link>

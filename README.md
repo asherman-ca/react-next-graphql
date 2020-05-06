@@ -17,3 +17,7 @@ https://stripe.com/docs/testing
 // Apollo
 
 // Styled Components
+
+
+// Testing
+- type "u" to update snapshot in terminal while running test

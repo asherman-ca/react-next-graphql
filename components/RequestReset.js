@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 
@@ -17,7 +16,7 @@ const REQUEST_RESET_MUTATION =  gql`
   }
 `;
 
-export default class RequestReset extends Component {
+class RequestReset extends Component {
   state = {
     email: '',
   };
@@ -33,7 +32,7 @@ export default class RequestReset extends Component {
         variables={this.state}
       >
         {(requestReset, { loading, error, called }) => (
-          <Form method="post" onSubmit={async e => {
+          <Form data-test="form" method="post" onSubmit={async e => {
             e.preventDefault();
             await requestReset();
             this.setState({
@@ -54,7 +53,7 @@ export default class RequestReset extends Component {
                   onChange={this.saveToState}
                 />
               </label>  
-              <button type="submut">Request Reset</button>
+              <button type="submit">Request Reset</button>
             </fieldset>
           </Form>
         )}
@@ -62,3 +61,6 @@ export default class RequestReset extends Component {
     )
   }
 }
+
+export default RequestReset;
+export { REQUEST_RESET_MUTATION };

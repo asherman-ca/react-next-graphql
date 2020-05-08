@@ -26,7 +26,7 @@ const CREATE_ITEM_MUTATION = gql`
   }
 `;
 
-export default class CreateItem extends Component {
+class CreateItem extends Component {
   state = {
     title: 'cool shoes',
     description: 'description words',
@@ -141,4 +141,5 @@ export default class CreateItem extends Component {
   }
 }
 
+export default CreateItem;
 export { CREATE_ITEM_MUTATION };
